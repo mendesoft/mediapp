@@ -1,17 +1,24 @@
 package xyz.mendesoft.controller;
 
-import xyz.mendesoft.dto.PatientDTO;
-import xyz.mendesoft.model.Patient;
-import xyz.mendesoft.service.IPatientService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import xyz.mendesoft.dto.PatientDTO;
+import xyz.mendesoft.model.Patient;
+import xyz.mendesoft.service.IPatientService;
 
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/patients") //endpoints | sustantivos plural
@@ -20,6 +27,7 @@ public class PatientController {
 
     //@Autowired
     private final IPatientService service;
+    @Qualifier("defaultMapper")
     private final ModelMapper mapper;
 
     /*public PatientController(IPatientService service) {
@@ -57,7 +65,7 @@ public class PatientController {
     }*/
 
     @PostMapping
-    public ResponseEntity<PatientDTO> save(@RequestBody PatientDTO dto){
+    public ResponseEntity<PatientDTO> save(@Valid @RequestBody PatientDTO dto){
         Patient obj = service.save(convertToEntity(dto));
         //localhost:8080/patients/3
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdPatient()).toUri();
@@ -65,7 +73,7 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PatientDTO> update(@PathVariable("id") Integer id, @RequestBody PatientDTO dto){
+    public ResponseEntity<PatientDTO> update(@Valid @PathVariable("id") Integer id, @RequestBody PatientDTO dto){
         Patient obj = service.update(convertToEntity(dto), id);
         return new ResponseEntity<>(convertToDto(obj), HttpStatus.OK);
     }
@@ -74,6 +82,18 @@ public class PatientController {
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id){
         service.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/hateoas/{id}")
+    public EntityModel<PatientDTO> findByIdHateoas(@PathVariable("id") Integer id){
+        EntityModel<PatientDTO> resource = EntityModel.of(convertToDto(service.findById(id)));
+        //localhost:8080/patients/1
+        WebMvcLinkBuilder link1 = linkTo(methodOn(this.getClass()).findById(id));
+        WebMvcLinkBuilder link2 = linkTo(methodOn(this.getClass()).findById(id));
+
+        resource.add(link1.withRel("patient-info1"));
+        resource.add(link1.withRel("patient-info2"));
+        return resource;
     }
 
     private PatientDTO convertToDto(Patient obj){
