@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { MaterialModule } from '../../../material/material.module';
 import { SpecialtyService } from '../../../service/specialty.service';
 import { Specialty } from '../../../model/specialty';
-import { MaterialModule } from '../../../material/material.module';
+
 
 @Component({
   standalone: true,

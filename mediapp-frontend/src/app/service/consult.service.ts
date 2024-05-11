@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
 import { ConsultListExamDTOI } from '../dto/consultListExamDTOI';
 import { FilterConsultDTO } from '../dto/filterConsultDTO';
 import { Consult } from '../model/consult';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'

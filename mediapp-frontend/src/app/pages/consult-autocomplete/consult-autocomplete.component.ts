@@ -7,8 +7,8 @@ import { Observable, map } from 'rxjs';
 import { MaterialModule } from '../../material/material.module';
 import { Patient } from '../../model/patient';
 import { Medic } from '../../model/medic';
-import { Exam } from '../../model/exam';
 import { Specialty } from '../../model/specialty';
+import { Exam } from '../../model/exam';
 import { ConsultDetail } from '../../model/consultDetail';
 import { PatientService } from '../../service/patient.service';
 import { MedicService } from '../../service/medic.service';
@@ -28,16 +28,16 @@ import { ConsultListExamDTOI } from '../../dto/consultListExamDTOI';
 })
 export class ConsultAutocompleteComponent implements OnInit{
 
-  patients?: Patient[];
-  medics?: Medic[];
-  form?: FormGroup;
+  patients: Patient[];
+  medics: Medic[];
+  form: FormGroup;
 
   medicControl: FormControl = new FormControl();
 
-  patients$?: Observable<Patient[]>
-  medicsFiltered$?: Observable<Medic[]>;
-  specialties?: Specialty[];
-  exams?: Exam[];
+  patients$: Observable<Patient[]>
+  medicsFiltered$: Observable<Medic[]>;
+  specialties: Specialty[];
+  exams: Exam[];
 
   minDate: Date = new Date();
   details: ConsultDetail[] = [];
@@ -70,12 +70,12 @@ export class ConsultAutocompleteComponent implements OnInit{
 
   filterMedics(val: any){
     if(val?.idMedic > 0){
-      return this.medics!.filter(el =>
-        el.primaryName!.toLowerCase().includes(val.primaryName.toLowerCase()) || el.surname!.toLowerCase().includes(val.surname.toLowerCase()) || el.cmpMedic!.includes(val.cmpMedic)
+      return this.medics.filter(el =>
+        el.primaryName.toLowerCase().includes(val.primaryName.toLowerCase()) || el.surname.toLowerCase().includes(val.surname.toLowerCase()) || el.cmpMedic.includes(val.cmpMedic)
       );
     }else{
-      return this.medics!.filter(el =>
-        el.primaryName!.toLowerCase().includes(val?.toLowerCase()) || el.surname!.toLowerCase().includes(val?.toLowerCase()) || el.cmpMedic!.includes(val)
+      return this.medics.filter(el =>
+        el.primaryName.toLowerCase().includes(val?.toLowerCase()) || el.surname.toLowerCase().includes(val?.toLowerCase()) || el.cmpMedic.includes(val)
       );
     }
   }
@@ -93,8 +93,8 @@ export class ConsultAutocompleteComponent implements OnInit{
 
   addDetail(){
     const det = new ConsultDetail();
-    det.diagnosis = this.form!.value['diagnosis'];
-    det.treatment = this.form!.value['treatment'];
+    det.diagnosis = this.form.value['diagnosis'];
+    det.treatment = this.form.value['treatment'];
 
     this.details.push(det);
   }
@@ -104,22 +104,22 @@ export class ConsultAutocompleteComponent implements OnInit{
   }
 
   addExam(){
-    if(this.form!.value['exam'] != null){
-      this.examsSelected.push(this.form!.value['exam']);
+    if(this.form.value['exam'] != null){
+      this.examsSelected.push(this.form.value['exam']);
     }else{
       this._snackBar.open('Please select an exam', 'INFO', {duration: 2000});
     }
   }
 
   save(){
-    if(this.form!.invalid){
+    if(this.form.invalid){
       return;
     }
 
     const consult = new Consult();
-    consult.patient = this.form!.value['patient'];
-    consult.medic = this.form!.value['medic'];
-    consult.specialty = this.form!.value['specialty'];
+    consult.patient = this.form.value['patient'];
+    consult.medic = this.form.value['medic'];
+    consult.specialty = this.form.value['specialty'];
     consult.details = this.details;
     consult.numConsult = "C1";
 
@@ -127,13 +127,14 @@ export class ConsultAutocompleteComponent implements OnInit{
     let localISOTime = (new Date(this.form.value['consultDate'] - tzoffset)).toISOString();*/
     //console.log(localISOTime)
 
-    // consult.consultDate = moment(this.form!.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
+    //CORREGIR
+    // consult.consultDate = moment(this.form.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
 
     /*const consultListExamDTO = new ConsultListExamDTO();
     consultListExamDTO.consult = consult;
     consultListExamDTO.lstExam = this.examsSelected;*/
 
-    const dto:ConsultListExamDTOI = {
+    const dto: ConsultListExamDTOI = {
       consult: consult,
       lstExam: this.examsSelected
     };
@@ -148,7 +149,7 @@ export class ConsultAutocompleteComponent implements OnInit{
   }
 
   cleanControls(){
-    this.form!.reset();
+    this.form.reset();
     this.medicControl.reset();
     this.details = [];
     this.examsSelected = [];

@@ -68,6 +68,7 @@ export class SearchComponent implements OnInit{
       let date1 = this.form.value['startDate'];
       let date2 = this.form.value['endDate'];
 
+      //CORREGIR
       // date1 = moment(date1).format('YYYY-MM-DDTHH:mm:ss');
       // date2 = moment(date2).format('YYYY-MM-DDTHH:mm:ss');
 

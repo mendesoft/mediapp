@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { MaterialModule } from '../../../material/material.module';
 import { ExamService } from '../../../service/exam.service';
+import { MaterialModule } from '../../../material/material.module';
 import { Exam } from '../../../model/exam';
 
 
@@ -19,7 +19,7 @@ export class ExamEditComponent implements OnInit {
 
   id: number;
   isEdit: boolean;
-  form!: FormGroup ;
+  form: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,16 +56,16 @@ export class ExamEditComponent implements OnInit {
   }
 
   get f() {
-    return this.form!.controls;
+    return this.form.controls;
   }
 
   operate() {
-    if (this.form!.invalid) { return; }
+    if (this.form.invalid) { return; }
 
     let exam = new Exam();
-    exam.idExam = this.form!.value['idExam'];
-    exam.nameExam = this.form!.value['name'];
-    exam.descriptionExam = this.form!.value['description'];
+    exam.idExam = this.form.value['idExam'];
+    exam.nameExam = this.form.value['name'];
+    exam.descriptionExam = this.form.value['description'];
 
 
     if (this.isEdit) {

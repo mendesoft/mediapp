@@ -7,13 +7,13 @@
     </div>
 
     <mat-form-field class="example-full-width">
-        <input matInput placeholder="Name" minlength="3" required formControlName="name">
+        <input matInput placeholder="Name" minlength="3" required formControlName="name">  
         <small *ngIf="f['name'].errors?.['required'] && f['name'].touched" class="invalid">Is required</small>
         <small *ngIf="f['name'].errors?.['minlength'] && f['name'].touched" class="invalid">Minlength is 3</small>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-        <input matInput placeholder="Description" minlength="3" required formControlName="description">
+        <input matInput placeholder="Description" minlength="3" required formControlName="description">  
         <small *ngIf="f['description'].errors?.['required'] && f['description'].touched" class="invalid">Is required</small>
         <small *ngIf="f['description'].errors?.['minlength'] && f['description'].touched" class="invalid">Minlength is 3</small>
     </mat-form-field>

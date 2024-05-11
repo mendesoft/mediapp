@@ -29,23 +29,23 @@ import { ConsultListExamDTOI } from '../../dto/consultListExamDTOI';
 })
 export class ConsultWizardComponent implements OnInit{
 
-  patients?: Patient[];
-  medics?: Medic[];
-  specialties?: Specialty[];
-  exams?: Exam[];
+  patients: Patient[];
+  medics: Medic[];
+  specialties: Specialty[];
+  exams: Exam[];
 
   minDate: Date = new Date();
   details: ConsultDetail[] = [];
   examsSelected: Exam[] = [];
 
-  firstFormGroup?: FormGroup;
-  secondFormGroup?: FormGroup;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
 
-  medicSelected?: Medic;
+  medicSelected: Medic;
   consultsArray: number[] = [];
-  consultSelected?: number;
+  consultSelected: number;
 
-  @ViewChild('stepper') stepper?: MatStepper;
+  @ViewChild('stepper') stepper: MatStepper;
 
   constructor(
     private patientService: PatientService,
@@ -86,8 +86,8 @@ export class ConsultWizardComponent implements OnInit{
 
   addDetail() {
     const det = new ConsultDetail();
-    det.diagnosis = this.firstFormGroup!.value['diagnosis'];
-    det.treatment = this.firstFormGroup!.value['treatment'];
+    det.diagnosis = this.firstFormGroup.value['diagnosis'];
+    det.treatment = this.firstFormGroup.value['treatment'];
 
     this.details.push(det);
   }
@@ -97,8 +97,8 @@ export class ConsultWizardComponent implements OnInit{
   }
 
   addExam() {
-    if (this.firstFormGroup!.value['exam'] != null) {
-      this.examsSelected.push(this.firstFormGroup!.value['exam']);
+    if (this.firstFormGroup.value['exam'] != null) {
+      this.examsSelected.push(this.firstFormGroup.value['exam']);
     } else {
       this._snackBar.open('Please select an exam', 'INFO', { duration: 2000 });
     }
@@ -113,9 +113,9 @@ export class ConsultWizardComponent implements OnInit{
   }
 
   nextManualStep(){
-    if(this.consultSelected && this.consultSelected > 0){
+    if(this.consultSelected > 0){
       //sgte paso
-      this.stepper!.next();
+      this.stepper.next();
     }else{
       this._snackBar.open('Please select a consult number', 'INFO', {duration: 2000,});
     }
@@ -123,17 +123,19 @@ export class ConsultWizardComponent implements OnInit{
 
 
   get f() {
-    return this.firstFormGroup!.controls;
+    return this.firstFormGroup.controls;
   }
 
   save() {
     const consult = new Consult();
-    consult.patient = this.firstFormGroup!.value['patient'];
+    consult.patient = this.firstFormGroup.value['patient'];
     consult.medic = this.medicSelected;
-    consult.specialty = this.firstFormGroup!.value['specialty'];
+    consult.specialty = this.firstFormGroup.value['specialty'];
     consult.numConsult = `C${this.consultSelected}`;
     consult.details = this.details;
-    // consult.consultDate = moment(this.firstFormGroup!.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
+
+    //CORREGIR
+    // consult.consultDate = moment(this.firstFormGroup.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
 
     const dto: ConsultListExamDTOI = {
       consult: consult,
@@ -150,12 +152,12 @@ export class ConsultWizardComponent implements OnInit{
   }
 
   cleanControls(){
-    this.firstFormGroup!.reset();
-    this.secondFormGroup!.reset();
-    this.stepper!.reset();
+    this.firstFormGroup.reset();
+    this.secondFormGroup.reset();
+    this.stepper.reset();
     this.details = [];
     this.examsSelected = [];
     this.consultSelected = 0;
-    this.medicSelected = undefined;
+    this.medicSelected = null;
   }
 }

@@ -1,6 +1,6 @@
 <mat-horizontal-stepper #stepper>
 
-    <!-- <mat-step [stepControl]="firstFormGroup">
+    <mat-step [stepControl]="firstFormGroup">
         <ng-template matStepLabel>Principal</ng-template>
 
         <form [formGroup]="firstFormGroup">
@@ -108,7 +108,7 @@
         <form [formGroup]="secondFormGroup">
 
             <mat-grid-list cols="10">
-                <mat-grid-tile *ngFor="let n of consultsArray"
+                <mat-grid-tile *ngFor="let n of consultsArray" 
                 [ngClass]="consultSelected == n ? 'consultCSS' : ''"
                 style="cursor: pointer;"
                 (click)="selectConsult(n)">
@@ -133,6 +133,6 @@
 
         <button mat-raised-button matStepperPrevious type="button" color="primary" >Previous</button>
         <button mat-raised-button (click)="save()" type="button" color="primary" >Save</button>
-    </mat-step> -->
+    </mat-step>
 
 </mat-horizontal-stepper>

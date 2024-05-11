@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { GenericService } from './generic.service';
 import { Subject } from 'rxjs';
 import { Exam } from '../model/exam';
-import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'

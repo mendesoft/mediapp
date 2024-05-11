@@ -6,8 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { MaterialModule } from '../../material/material.module';
 import { Exam } from '../../model/exam';
+import { MaterialModule } from '../../material/material.module';
 import { ExamService } from '../../service/exam.service';
 
 @Component({

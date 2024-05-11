@@ -5,7 +5,6 @@ import { MaterialModule } from '../../../material/material.module';
 import { Consult } from '../../../model/consult';
 import { ConsultService } from '../../../service/consult.service';
 
-
 @Component({
   selector: 'app-search-dialog',
   standalone: true,
@@ -15,7 +14,7 @@ import { ConsultService } from '../../../service/consult.service';
 })
 export class SearchDialogComponent implements OnInit{
 
-  consult?: Consult;
+  consult: Consult;
   exams: any;
 
   constructor(
@@ -27,13 +26,9 @@ export class SearchDialogComponent implements OnInit{
   ngOnInit(): void {
     this.consult = {...this.data};
 
-    if (this.consult.idConsult){
     this.consultService.getExamsByIdConsult(this.consult.idConsult).subscribe(data => {
       this.exams = data;
     });
-    }else {
-      console.log('ERROR...')
-    }
   }
 
 }

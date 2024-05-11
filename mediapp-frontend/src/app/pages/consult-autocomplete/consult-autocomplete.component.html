@@ -2,17 +2,26 @@
     <span>Consult Register Auto, Select, Etc.</span>
 </mat-toolbar>
 
-<!-- <form class="example-container" [formGroup]="form" (submit)="save()">
+<form class="example-container" [formGroup]="form" (submit)="save()">
 
     <mat-form-field>
         <mat-label>Patients</mat-label>
-        <mat-select formControlName="patient" >
+        <mat-select formControlName="patient" > <!-- (selectionChange)="selectCountry($event)" -->
             <mat-option *ngFor="let p of patients$ | async" [value]="p">
                 {{p.firstName}} {{p.lastName}}
             </mat-option>
         </mat-select>
     </mat-form-field>
 
+    
+    <!--<mat-form-field>
+        <mat-label>Cities</mat-label>
+        <mat-select formControlName="cities">
+            <mat-option *ngFor="let c of cities" [value]="c">
+                {{p.cityName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>-->
 
 
     <mat-form-field>
@@ -30,7 +39,7 @@
                 {{s.nameSpecialty}}
             </mat-option>
         </mat-select>
-    </mat-form-field>
+    </mat-form-field>  
 
     <mat-form-field>
         <mat-label>Select a date</mat-label>
@@ -41,7 +50,7 @@
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput placeholder="Diagnosis" formControlName="diagnosis" >
+        <input matInput placeholder="Diagnosis" formControlName="diagnosis" > <!-- [(ngModel)]="diagnosis" -->
     </mat-form-field>
 
     <mat-form-field>
@@ -85,4 +94,4 @@
 
     <button mat-raised-button color="primary" type="submit">Save</button>
 
-</form> -->
+</form>
