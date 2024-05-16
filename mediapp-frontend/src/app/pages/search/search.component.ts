@@ -6,13 +6,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTabGroup } from '@angular/material/tabs';
-import * as moment from 'moment';
 
 import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 import { MaterialModule } from '../../material/material.module';
 import { Consult } from '../../model/consult';
 import { ConsultService } from '../../service/consult.service';
 import { FilterConsultDTO } from '../../dto/filterConsultDTO';
+import moment from 'moment';
 
 /*interface filterData {
   dni: string;
@@ -55,7 +55,7 @@ export class SearchComponent implements OnInit{
     if(this.tabGroup.selectedIndex == 0){
       //Option 1
       const dni = this.form.value['dni'];
-      const fullname: string = this.form.value['fullname'].toLowerCase();
+      const fullname: string = this.form.value['fullname']; //.toLowerCase()
 
       const filterData = new FilterConsultDTO(dni, fullname);
 
@@ -69,8 +69,8 @@ export class SearchComponent implements OnInit{
       let date2 = this.form.value['endDate'];
 
       //CORREGIR
-      // date1 = moment(date1).format('YYYY-MM-DDTHH:mm:ss');
-      // date2 = moment(date2).format('YYYY-MM-DDTHH:mm:ss');
+      date1 = moment(date1).format('YYYY-MM-DDTHH:mm:ss');
+      date2 = moment(date2).format('YYYY-MM-DDTHH:mm:ss');
 
       this.consultService.searchByDates(date1, date2).subscribe(data => {
         this.createTable(data);

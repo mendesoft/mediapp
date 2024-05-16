@@ -1,8 +1,8 @@
 package xyz.mendesoft.controller;
 
-import xyz.mendesoft.dto.ConsultDTO;
-import xyz.mendesoft.dto.ConsultListExamDTO;
-import xyz.mendesoft.dto.FilterConsultDTO;
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
+import xyz.mendesoft.dto.*;
 import xyz.mendesoft.model.Consult;
 import xyz.mendesoft.model.Exam;
 import xyz.mendesoft.service.IConsultService;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;

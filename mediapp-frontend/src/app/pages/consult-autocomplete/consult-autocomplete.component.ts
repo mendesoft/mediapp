@@ -2,7 +2,7 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import * as moment from 'moment';
+//import * as moment from 'moment';
 import { Observable, map } from 'rxjs';
 import { MaterialModule } from '../../material/material.module';
 import { Patient } from '../../model/patient';
@@ -17,6 +17,7 @@ import { ExamService } from '../../service/exam.service';
 import { ConsultService } from '../../service/consult.service';
 import { Consult } from '../../model/consult';
 import { ConsultListExamDTOI } from '../../dto/consultListExamDTOI';
+import moment from 'moment';
 
 
 @Component({
@@ -123,16 +124,8 @@ export class ConsultAutocompleteComponent implements OnInit{
     consult.details = this.details;
     consult.numConsult = "C1";
 
-    /*let tzoffset = (this.form.value['consultDate']).getTimezoneOffset() * 60000;
-    let localISOTime = (new Date(this.form.value['consultDate'] - tzoffset)).toISOString();*/
-    //console.log(localISOTime)
-
     //CORREGIR
-    // consult.consultDate = moment(this.form.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
-
-    /*const consultListExamDTO = new ConsultListExamDTO();
-    consultListExamDTO.consult = consult;
-    consultListExamDTO.lstExam = this.examsSelected;*/
+    consult.consultDate = moment(this.form.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
 
     const dto: ConsultListExamDTOI = {
       consult: consult,

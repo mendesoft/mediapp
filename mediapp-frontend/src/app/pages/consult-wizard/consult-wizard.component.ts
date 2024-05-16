@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
-import * as moment from 'moment';
 import { FlexLayoutModule } from 'ngx-flexible-layout';
 import { MaterialModule } from '../../material/material.module';
 import { Patient } from '../../model/patient';
@@ -18,6 +17,7 @@ import { ExamService } from '../../service/exam.service';
 import { ConsultService } from '../../service/consult.service';
 import { Consult } from '../../model/consult';
 import { ConsultListExamDTOI } from '../../dto/consultListExamDTOI';
+import moment from 'moment';
 
 
 @Component({
@@ -135,7 +135,7 @@ export class ConsultWizardComponent implements OnInit{
     consult.details = this.details;
 
     //CORREGIR
-    // consult.consultDate = moment(this.firstFormGroup.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
+    consult.consultDate = moment(this.firstFormGroup.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
 
     const dto: ConsultListExamDTOI = {
       consult: consult,
