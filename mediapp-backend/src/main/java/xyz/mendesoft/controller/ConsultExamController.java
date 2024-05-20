@@ -27,6 +27,7 @@ public class ConsultExamController {
 
     @GetMapping("/{idConsult}")
     public ResponseEntity<List<ConsultExamDTO>> getConsultsById(@PathVariable("idConsult") Integer idConsult) {
+        System.out.println(idConsult);
         List<ConsultExam> lst = service.getExamsByConsultId(idConsult);
         System.out.println(lst);
         List<ConsultExamDTO> lstDTO = mapper.map(lst, new TypeToken<List<ConsultExamDTO>>() {}.getType());

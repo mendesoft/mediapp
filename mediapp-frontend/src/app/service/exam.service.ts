@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GenericService } from './generic.service';
 import { Subject } from 'rxjs';
 import { Exam } from '../model/exam';
-import { environment } from '../../environments/environment.development';
+import { environment } from 'src/environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -33,5 +33,5 @@ export class ExamService extends GenericService<Exam>{
   getMessageChange(){
     return this.messageChange.asObservable();
   }
-
+  
 }

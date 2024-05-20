@@ -1,9 +1,10 @@
 import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Chart, ChartType } from 'chart.js/auto';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { ConsultService } from '../../service/consult.service';
-import { MaterialModule } from '../../material/material.module';
+import { MaterialModule } from 'src/app/material/material.module';
+import { ConsultService } from 'src/app/service/consult.service';
 
 @Component({
   selector: 'app-report',
@@ -26,17 +27,40 @@ export class ReportComponent implements OnInit {
   selectedFiles: FileList;
   filename: string;
 
-  constructor(private consultService: ConsultService) {}
+  imageData: any;
+
+  constructor(
+    private consultService: ConsultService, 
+    private sanitizer: DomSanitizer
+    ) {}
 
   ngOnInit(): void {
-    this.draw();
+    this.draw();    
+
+    this.consultService.readFile(1).subscribe(data => {
+      this.convertToBase64(data);
+    });
+  }
+
+  convertToBase64(data: any){
+    const reader = new FileReader();
+    reader.readAsDataURL(data);
+    reader.onloadend = () => {
+      const base64 = reader.result;
+      //console.log(base64);
+      this.applySanitizer(base64);
+    }
+  }
+
+  applySanitizer(base64: any){
+    this.imageData = this.sanitizer.bypassSecurityTrustResourceUrl(base64);
   }
 
   change(type: string) {
     switch (type) {
       case 'line':
         this.type = this.lineType;
-        break;
+        break;      
       case 'bar':
         this.type = this.barType;
         break;
@@ -101,7 +125,7 @@ export class ReportComponent implements OnInit {
             },
           },
         },
-      });
+      });    
     });
   }
 

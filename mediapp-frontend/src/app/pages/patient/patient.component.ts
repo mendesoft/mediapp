@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Patient } from 'src/app/model/patient';
+import { PatientService } from 'src/app/service/patient.service';
 import { NgFor } from '@angular/common';
+import { MaterialModule } from 'src/app/material/material.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { switchMap } from 'rxjs';
-import { MaterialModule } from '../../material/material.module';
-import { Patient } from '../../model/patient';
-import { PatientService } from '../../service/patient.service';
 
 @Component({
   selector: 'app-patient',
@@ -18,12 +18,14 @@ import { PatientService } from '../../service/patient.service';
   imports: [MaterialModule, NgFor, RouterLink, RouterOutlet],
 })
 export class PatientComponent implements OnInit {
-
+  
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'dni', 'actions'];
   dataSource: MatTableDataSource<Patient>;
 
   @ViewChild(MatPaginator) paginator : MatPaginator;
   @ViewChild(MatSort) sort : MatSort;
+  
+  totalElements: number = 0;
 
   constructor(
     private patientService: PatientService,
@@ -40,9 +42,14 @@ export class PatientComponent implements OnInit {
       this._snackBar.open(data, 'INFO', { duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'});
     });
 
-    this.patientService.findAll().subscribe((data) => {
-      this.createTable(data);
+    this.patientService.listPageable(0, 2).subscribe(data => {
+      this.totalElements = data.totalElements;
+      this.createTable(data.content);
     });
+
+    /*this.patientService.findAll().subscribe((data) => {
+      this.createTable(data);
+    });*/
   }
 
   applyFilter(e: any){
@@ -52,7 +59,7 @@ export class PatientComponent implements OnInit {
   createTable(data: Patient[]){
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    //this.dataSource.paginator = this.paginator;
   }
 
   delete(idPatient: number){
@@ -62,5 +69,12 @@ export class PatientComponent implements OnInit {
         this.createTable(data);
         this.patientService.setMessageChange('DELETED!');
       })
+  }
+
+  showMore(e: any){
+    this.patientService.listPageable(e.pageIndex, e.pageSize).subscribe(data => {
+      this.totalElements = data.totalElements;
+      this.createTable(data.content);
+    });
   }
 }

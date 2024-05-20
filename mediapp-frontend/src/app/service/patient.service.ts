@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from 'src/environments/environment.development';
 import { Patient } from '../model/patient';
 import { Subject } from 'rxjs';
 import { GenericService } from './generic.service';
@@ -17,6 +17,11 @@ export class PatientService extends GenericService<Patient>{
   constructor(protected override http: HttpClient){
     super(http, `${environment.HOST}/patients`);
   }
+
+  listPageable(p: number, s: number){
+    return this.http.get<any>(`${this.url}/pageable?page=${p}&size=${s}`);
+  }
+
 
   //constructor(private http: HttpClient) { }
 

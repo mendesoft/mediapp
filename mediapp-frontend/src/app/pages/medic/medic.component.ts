@@ -3,12 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Medic } from 'src/app/model/medic';
+import { MedicService } from 'src/app/service/medic.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MaterialModule } from 'src/app/material/material.module';
 import { MedicDialogComponent } from './medic-dialog/medic-dialog.component';
 import { switchMap } from 'rxjs';
-import { MaterialModule } from '../../material/material.module';
-import { Medic } from '../../model/medic';
-import { MedicService } from '../../service/medic.service';
 
 @Component({
   standalone: true,

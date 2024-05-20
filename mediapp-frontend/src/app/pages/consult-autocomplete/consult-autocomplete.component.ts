@@ -2,23 +2,22 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-//import * as moment from 'moment';
+import * as moment from 'moment';
 import { Observable, map } from 'rxjs';
-import { MaterialModule } from '../../material/material.module';
-import { Patient } from '../../model/patient';
-import { Medic } from '../../model/medic';
-import { Specialty } from '../../model/specialty';
-import { Exam } from '../../model/exam';
-import { ConsultDetail } from '../../model/consultDetail';
-import { PatientService } from '../../service/patient.service';
-import { MedicService } from '../../service/medic.service';
-import { SpecialtyService } from '../../service/specialty.service';
-import { ExamService } from '../../service/exam.service';
-import { ConsultService } from '../../service/consult.service';
-import { Consult } from '../../model/consult';
-import { ConsultListExamDTOI } from '../../dto/consultListExamDTOI';
-import moment from 'moment';
-
+import { ConsultListExamDTO } from 'src/app/dto/consultListExamDTO';
+import { ConsultListExamDTOI } from 'src/app/dto/consultListExamDTOI';
+import { MaterialModule } from 'src/app/material/material.module';
+import { Consult } from 'src/app/model/consult';
+import { ConsultDetail } from 'src/app/model/consultDetail';
+import { Exam } from 'src/app/model/exam';
+import { Medic } from 'src/app/model/medic';
+import { Patient } from 'src/app/model/patient';
+import { Specialty } from 'src/app/model/specialty';
+import { ConsultService } from 'src/app/service/consult.service';
+import { ExamService } from 'src/app/service/exam.service';
+import { MedicService } from 'src/app/service/medic.service';
+import { PatientService } from 'src/app/service/patient.service';
+import { SpecialtyService } from 'src/app/service/specialty.service';
 
 @Component({
   selector: 'app-consult-autocomplete',
@@ -71,11 +70,11 @@ export class ConsultAutocompleteComponent implements OnInit{
 
   filterMedics(val: any){
     if(val?.idMedic > 0){
-      return this.medics.filter(el =>
+      return this.medics.filter(el => 
         el.primaryName.toLowerCase().includes(val.primaryName.toLowerCase()) || el.surname.toLowerCase().includes(val.surname.toLowerCase()) || el.cmpMedic.includes(val.cmpMedic)
       );
     }else{
-      return this.medics.filter(el =>
+      return this.medics.filter(el => 
         el.primaryName.toLowerCase().includes(val?.toLowerCase()) || el.surname.toLowerCase().includes(val?.toLowerCase()) || el.cmpMedic.includes(val)
       );
     }
@@ -95,7 +94,7 @@ export class ConsultAutocompleteComponent implements OnInit{
   addDetail(){
     const det = new ConsultDetail();
     det.diagnosis = this.form.value['diagnosis'];
-    det.treatment = this.form.value['treatment'];
+    det.treatment = this.form.value['treatment'];    
 
     this.details.push(det);
   }
@@ -123,9 +122,16 @@ export class ConsultAutocompleteComponent implements OnInit{
     consult.specialty = this.form.value['specialty'];
     consult.details = this.details;
     consult.numConsult = "C1";
+    
+    /*let tzoffset = (this.form.value['consultDate']).getTimezoneOffset() * 60000;
+    let localISOTime = (new Date(this.form.value['consultDate'] - tzoffset)).toISOString();*/
+    //console.log(localISOTime)
 
-    //CORREGIR
     consult.consultDate = moment(this.form.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
+
+    /*const consultListExamDTO = new ConsultListExamDTO();
+    consultListExamDTO.consult = consult;
+    consultListExamDTO.lstExam = this.examsSelected;*/
 
     const dto: ConsultListExamDTOI = {
       consult: consult,

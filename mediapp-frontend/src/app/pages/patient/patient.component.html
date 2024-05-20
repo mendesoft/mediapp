@@ -51,7 +51,7 @@
 
     </table>
 
-    <mat-paginator [pageSizeOptions]="[2, 4, 10, 100]" aria-label="Select page"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[2, 4, 10, 100]" [length]="totalElements" aria-label="Select page" (page)="showMore($event)"></mat-paginator>
 
     <button mat-fab color="primary" style="float: right;" routerLink="/pages/patient/new">
         <mat-icon>add</mat-icon>

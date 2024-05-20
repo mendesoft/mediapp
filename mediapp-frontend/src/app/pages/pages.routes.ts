@@ -10,8 +10,12 @@ import { ConsultAutocompleteComponent } from './consult-autocomplete/consult-aut
 import { ConsultWizardComponent } from './consult-wizard/consult-wizard.component';
 import { SearchComponent } from './search/search.component';
 import { ReportComponent } from './report/report.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { CertGuard } from '../guard/cert.guard';
+import { Not403Component } from './not403/not403.component';
 
 export const PagesRoutes: Routes = [
+  { path: 'dashboard', component: DashboardComponent, canActivate: [CertGuard]},
   {
     path: 'patient',
     component: PatientComponent,
@@ -24,7 +28,7 @@ export const PagesRoutes: Routes = [
         path: 'edit/:id',
         component: PatientEditComponent,
       },
-    ],
+    ], canActivate: [CertGuard],
   },  
   {
     path: 'exam',
@@ -38,7 +42,7 @@ export const PagesRoutes: Routes = [
         path: 'edit/:id',
         component: ExamEditComponent,
       },
-    ],
+    ], canActivate: [CertGuard],
   },
   {
     path: 'specialty',
@@ -52,12 +56,13 @@ export const PagesRoutes: Routes = [
         path: 'edit/:id',
         component: SpecialtyEditComponent,
       },
-    ],
+    ], canActivate: [CertGuard],
   },
-  { path: 'medic', component: MedicComponent },
-  { path: 'consult-autocomplete', component: ConsultAutocompleteComponent },
-  { path: 'consult-wizard', component: ConsultWizardComponent },
-  { path: 'search', component: SearchComponent },
-  { path: 'report', component: ReportComponent },
+  { path: 'medic', component: MedicComponent, canActivate: [CertGuard] },
+  { path: 'consult-autocomplete', component: ConsultAutocompleteComponent, canActivate: [CertGuard] },
+  { path: 'consult-wizard', component: ConsultWizardComponent, canActivate: [CertGuard] },
+  { path: 'search', component: SearchComponent, canActivate: [CertGuard] },
+  { path: 'report', component: ReportComponent, canActivate: [CertGuard] },
+  { path: 'not-403', component: Not403Component},
 ];
 

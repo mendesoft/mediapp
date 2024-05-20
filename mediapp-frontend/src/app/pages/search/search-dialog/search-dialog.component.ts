@@ -1,9 +1,10 @@
 import { DatePipe, NgFor } from '@angular/common';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MaterialModule } from '../../../material/material.module';
-import { Consult } from '../../../model/consult';
-import { ConsultService } from '../../../service/consult.service';
+import { MaterialModule } from 'src/app/material/material.module';
+import { Consult } from 'src/app/model/consult';
+import { Exam } from 'src/app/model/exam';
+import { ConsultService } from 'src/app/service/consult.service';
 
 @Component({
   selector: 'app-search-dialog',

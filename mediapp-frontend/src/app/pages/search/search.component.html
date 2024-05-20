@@ -3,7 +3,7 @@
 <form [formGroup]="form" (submit)="search()">
 
     <mat-tab-group #tab>
-        <mat-tab label="Option 1">
+        <mat-tab label="Option 1"> 
             <mat-form-field>
                 <input matInput placeholder="DNI" formControlName="dni">
             </mat-form-field>
@@ -13,7 +13,7 @@
             </mat-form-field>
         </mat-tab>
 
-        <mat-tab label="Option 2">
+        <mat-tab label="Option 2"> 
             <mat-form-field appearance="fill">
                 <mat-label>Select a Date Range:</mat-label>
                 <mat-date-range-input [rangePicker]="picker">
@@ -28,13 +28,12 @@
 
     <button mat-raised-button color="primary" type="submit">Search</button>
 
-
+    
     <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="patient">
             <mat-header-cell *matHeaderCellDef> Patient </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.patient.firstName | uppercase }}
-                {{row.patient.lastName | lowercase}}
-            </mat-cell>
+                {{row.patient.lastName | lowercase}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="medic">

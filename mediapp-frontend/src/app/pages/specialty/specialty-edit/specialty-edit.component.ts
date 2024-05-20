@@ -3,10 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { MaterialModule } from '../../../material/material.module';
-import { SpecialtyService } from '../../../service/specialty.service';
-import { Specialty } from '../../../model/specialty';
-
+import { MaterialModule } from 'src/app/material/material.module';
+import { Specialty } from 'src/app/model/specialty';
+import { SpecialtyService } from 'src/app/service/specialty.service';
 
 @Component({
   standalone: true,
@@ -31,7 +30,7 @@ export class SpecialtyEditComponent implements OnInit {
     this.form = new FormGroup({
       'idSpecialty': new FormControl(0),
       'name': new FormControl('', [Validators.required, Validators.minLength(3)]),
-      'description': new FormControl('', [Validators.required, Validators.minLength(3)])
+      'description': new FormControl('', [Validators.required, Validators.minLength(3)])      
     });
 
     this.route.params.subscribe(data => {
@@ -49,7 +48,7 @@ export class SpecialtyEditComponent implements OnInit {
         this.form = new FormGroup({
           'idSpecialty': new FormControl(data.idSpecialty),
           'name': new FormControl(data.nameSpecialty, [Validators.required, Validators.minLength(3)]),
-          'description': new FormControl(data.descriptionSpecialty, [Validators.required, Validators.minLength(3)])
+          'description': new FormControl(data.descriptionSpecialty, [Validators.required, Validators.minLength(3)])          
         });
       });
     }
@@ -66,7 +65,7 @@ export class SpecialtyEditComponent implements OnInit {
     specialty.idSpecialty = this.form.value['idSpecialty'];
     specialty.nameSpecialty = this.form.value['name'];
     specialty.descriptionSpecialty = this.form.value['description'];
-
+    
 
     if (this.isEdit) {
       //UPDATE
@@ -77,10 +76,10 @@ export class SpecialtyEditComponent implements OnInit {
           this.specialtyService.setMessageChange('UPDATED!')
         });
       });
-    } else {
+    } else {      
       //INSERT
       //PRACTICA IDEAL
-      this.specialtyService.save(specialty).pipe(switchMap(()=>{
+      this.specialtyService.save(specialty).pipe(switchMap(()=>{        
         return this.specialtyService.findAll();
       }))
       .subscribe(data => {

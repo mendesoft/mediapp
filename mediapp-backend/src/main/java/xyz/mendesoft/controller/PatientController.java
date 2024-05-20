@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -94,6 +96,13 @@ public class PatientController {
         resource.add(link1.withRel("patient-info1"));
         resource.add(link1.withRel("patient-info2"));
         return resource;
+    }
+
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<PatientDTO>> listPage(Pageable pageable){
+        Page<PatientDTO> page = service.listPage(pageable).map(p -> mapper.map(p, PatientDTO.class));
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     private PatientDTO convertToDto(Patient obj){

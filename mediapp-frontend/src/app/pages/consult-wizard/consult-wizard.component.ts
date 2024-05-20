@@ -3,22 +3,21 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
+import * as moment from 'moment';
 import { FlexLayoutModule } from 'ngx-flexible-layout';
-import { MaterialModule } from '../../material/material.module';
-import { Patient } from '../../model/patient';
-import { Medic } from '../../model/medic';
-import { Specialty } from '../../model/specialty';
-import { Exam } from '../../model/exam';
-import { ConsultDetail } from '../../model/consultDetail';
-import { PatientService } from '../../service/patient.service';
-import { MedicService } from '../../service/medic.service';
-import { SpecialtyService } from '../../service/specialty.service';
-import { ExamService } from '../../service/exam.service';
-import { ConsultService } from '../../service/consult.service';
-import { Consult } from '../../model/consult';
-import { ConsultListExamDTOI } from '../../dto/consultListExamDTOI';
-import moment from 'moment';
-
+import { ConsultListExamDTOI } from 'src/app/dto/consultListExamDTOI';
+import { MaterialModule } from 'src/app/material/material.module';
+import { Consult } from 'src/app/model/consult';
+import { ConsultDetail } from 'src/app/model/consultDetail';
+import { Exam } from 'src/app/model/exam';
+import { Medic } from 'src/app/model/medic';
+import { Patient } from 'src/app/model/patient';
+import { Specialty } from 'src/app/model/specialty';
+import { ConsultService } from 'src/app/service/consult.service';
+import { ExamService } from 'src/app/service/exam.service';
+import { MedicService } from 'src/app/service/medic.service';
+import { PatientService } from 'src/app/service/patient.service';
+import { SpecialtyService } from 'src/app/service/specialty.service';
 
 @Component({
   selector: 'app-consult-wizard',
@@ -69,7 +68,7 @@ export class ConsultWizardComponent implements OnInit{
 
     this.secondFormGroup = this._formBuilder.group({
     });
-
+    
     this.loadInitialData();
   }
 
@@ -83,7 +82,7 @@ export class ConsultWizardComponent implements OnInit{
       this.consultsArray.push(i);
     }
   }
-
+  
   addDetail() {
     const det = new ConsultDetail();
     det.diagnosis = this.firstFormGroup.value['diagnosis'];
@@ -121,7 +120,7 @@ export class ConsultWizardComponent implements OnInit{
     }
   }
 
-
+  
   get f() {
     return this.firstFormGroup.controls;
   }
@@ -133,8 +132,6 @@ export class ConsultWizardComponent implements OnInit{
     consult.specialty = this.firstFormGroup.value['specialty'];
     consult.numConsult = `C${this.consultSelected}`;
     consult.details = this.details;
-
-    //CORREGIR
     consult.consultDate = moment(this.firstFormGroup.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
 
     const dto: ConsultListExamDTOI = {
@@ -148,7 +145,7 @@ export class ConsultWizardComponent implements OnInit{
       setTimeout( ()=> {
         this.cleanControls();
       }, 2000);
-    });
+    });    
   }
 
   cleanControls(){

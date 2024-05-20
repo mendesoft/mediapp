@@ -3,10 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { ExamService } from '../../../service/exam.service';
-import { MaterialModule } from '../../../material/material.module';
-import { Exam } from '../../../model/exam';
-
+import { MaterialModule } from 'src/app/material/material.module';
+import { Exam } from 'src/app/model/exam';
+import { ExamService } from 'src/app/service/exam.service';
 
 @Component({
   standalone: true,
@@ -31,7 +30,7 @@ export class ExamEditComponent implements OnInit {
     this.form = new FormGroup({
       'idExam': new FormControl(0),
       'name': new FormControl('', [Validators.required, Validators.minLength(3)]),
-      'description': new FormControl('', [Validators.required, Validators.minLength(3)])
+      'description': new FormControl('', [Validators.required, Validators.minLength(3)])      
     });
 
     this.route.params.subscribe(data => {
@@ -49,7 +48,7 @@ export class ExamEditComponent implements OnInit {
         this.form = new FormGroup({
           'idExam': new FormControl(data.idExam),
           'name': new FormControl(data.nameExam, [Validators.required, Validators.minLength(3)]),
-          'description': new FormControl(data.descriptionExam, [Validators.required, Validators.minLength(3)])
+          'description': new FormControl(data.descriptionExam, [Validators.required, Validators.minLength(3)])          
         });
       });
     }
@@ -66,7 +65,7 @@ export class ExamEditComponent implements OnInit {
     exam.idExam = this.form.value['idExam'];
     exam.nameExam = this.form.value['name'];
     exam.descriptionExam = this.form.value['description'];
-
+    
 
     if (this.isEdit) {
       //UPDATE
@@ -77,10 +76,10 @@ export class ExamEditComponent implements OnInit {
           this.examService.setMessageChange('UPDATED!')
         });
       });
-    } else {
+    } else {      
       //INSERT
       //PRACTICA IDEAL
-      this.examService.save(exam).pipe(switchMap(()=>{
+      this.examService.save(exam).pipe(switchMap(()=>{        
         return this.examService.findAll();
       }))
       .subscribe(data => {

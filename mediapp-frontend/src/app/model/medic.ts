@@ -1,7 +1,7 @@
 export class Medic{
-    idMedic?: number;
-    primaryName?: string;
-    surname?: string;
-    cmpMedic?: string;
-    photo?: string;
+    idMedic: number;
+    primaryName: string;
+    surname: string;
+    cmpMedic: string;
+    photo: string;
 }

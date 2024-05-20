@@ -3,7 +3,7 @@ import { GenericService } from './generic.service';
 import { Specialty } from '../model/specialty';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.development';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +33,5 @@ export class SpecialtyService extends GenericService<Specialty>{
   getMessageChange(){
     return this.messageChange.asObservable();
   }
-
+  
 }

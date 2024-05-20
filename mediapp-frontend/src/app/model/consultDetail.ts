@@ -1,4 +1,4 @@
 export class ConsultDetail{
-    diagnosis?: string;
-    treatment?: string;
+    diagnosis: string;
+    treatment: string;
 }

@@ -1,10 +1,14 @@
 package xyz.mendesoft.controller;
 
+//import com.cloudinary.Cloudinary;
+//import com.cloudinary.utils.ObjectUtils;
+//import org.cloudinary.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.mendesoft.dto.*;
 import xyz.mendesoft.model.Consult;
 import xyz.mendesoft.model.Exam;
+import xyz.mendesoft.model.MediaFile;
 import xyz.mendesoft.service.IConsultService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +21,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import xyz.mendesoft.service.IMediaFileService;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -33,6 +42,11 @@ public class ConsultController {
     private final IConsultService service;
     @Qualifier("consultMapper")
     private final ModelMapper mapper;
+
+    //UPLOAD IMAGEN
+    private final IMediaFileService mfService;
+    //private final Cloudinary cloudinary;
+
 
     @GetMapping
     public ResponseEntity<List<ConsultDTO>> findAll(){
@@ -125,8 +139,46 @@ public class ConsultController {
     public ResponseEntity<Void> saveFile(@RequestParam("file") MultipartFile file) throws Exception{
         //BD
 
+
+        MediaFile mf = new MediaFile();
+        mf.setFileType(file.getContentType());
+        mf.setFilename(file.getOriginalFilename());
+        mf.setValue(file.getBytes());
+
+        mfService.save(mf);
+
+
         //Repo Externo
-        return null;
+
+        /*
+        File f = this.convertToFile(file);
+        Map response = cloudinary.uploader().upload(f, ObjectUtils.asMap("resource_type", "auto"));
+        JSONObject json = new JSONObject(response);
+        String url = json.getString("url");
+
+        System.out.println(url);
+        */
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/readFile/{idFile}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> readFile(@PathVariable("idFile") Integer idFile) throws IOException {
+
+        byte[] arr = mfService.findById(idFile).getValue();
+
+        return new ResponseEntity<>(arr, HttpStatus.OK);
+    }
+
+
+
+    public File convertToFile(MultipartFile multipartFile) throws IOException {
+        File file = new File(multipartFile.getOriginalFilename());
+        FileOutputStream outputStream = new FileOutputStream(file);
+        outputStream.write(multipartFile.getBytes());
+        outputStream.close();
+        return file;
     }
 
     private ConsultDTO convertToDto(Consult obj){

@@ -4,9 +4,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { MaterialModule } from '../../../material/material.module';
-import { PatientService } from '../../../service/patient.service';
-import { Patient } from '../../../model/patient';
+import { MaterialModule } from 'src/app/material/material.module';
+import { Patient } from 'src/app/model/patient';
+import { PatientService } from 'src/app/service/patient.service';
 
 @Component({
   selector: 'app-patient-edit',
@@ -49,7 +49,7 @@ export class PatientEditComponent implements OnInit {
 
   initForm(){
     if(this.isEdit){
-
+      
       this.patientService.findById(this.id).subscribe(data => {
         this.form = new FormGroup({
           idPatient: new FormControl(data.idPatient),
@@ -60,7 +60,7 @@ export class PatientEditComponent implements OnInit {
           phone: new FormControl(data.phone, [Validators.required, Validators.minLength(9)]),
           email: new FormControl(data.email, [Validators.required, Validators.email]),
         });
-      });
+      });      
     }
   }
 
@@ -93,7 +93,7 @@ export class PatientEditComponent implements OnInit {
       //INSERT
       //IDEAL - PRACTICA RECOMENDADA
       this.patientService.save(patient).pipe(switchMap( ()=> {
-          return this.patientService.findAll();
+          return this.patientService.findAll();          
       }))
       .subscribe(data => {
         this.patientService.setPatientChange(data);

@@ -1,5 +1,7 @@
 package xyz.mendesoft.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import xyz.mendesoft.model.Patient;
 import xyz.mendesoft.repo.IGenericRepo;
 import xyz.mendesoft.repo.IPatientRepo;
@@ -19,4 +21,8 @@ public class PatientServiceImpl extends CRUDImpl<Patient, Integer> implements IP
         return repo;
     }
 
+
+    @Override
+    public Page<Patient> listPage(Pageable pageable) {
+        return repo.findAll(pageable);    }
 }

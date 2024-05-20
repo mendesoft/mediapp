@@ -6,9 +6,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { Exam } from '../../model/exam';
-import { MaterialModule } from '../../material/material.module';
-import { ExamService } from '../../service/exam.service';
+import { MaterialModule } from 'src/app/material/material.module';
+import { Exam } from 'src/app/model/exam';
+import { ExamService } from 'src/app/service/exam.service';
 
 @Component({
   standalone: true,
@@ -60,9 +60,9 @@ export class ExamComponent implements OnInit {
   }
 
   createTable(exams: Exam[]){
-    this.dataSource = new MatTableDataSource(exams);
+    this.dataSource = new MatTableDataSource(exams);    
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;        
   }
 
 

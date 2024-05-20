@@ -3,9 +3,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { switchMap } from 'rxjs';
-import { MaterialModule } from '../../../material/material.module';
-import { Medic } from '../../../model/medic';
-import { MedicService } from '../../../service/medic.service';
+import { MaterialModule } from 'src/app/material/material.module';
+import { Medic } from 'src/app/model/medic';
+import { MedicService } from 'src/app/service/medic.service';
 
 @Component({
   selector: 'app-medic-dialog',
@@ -25,7 +25,7 @@ export class MedicDialogComponent implements OnInit{
   ){
 
   }
-
+  
   ngOnInit(): void {
     //this.medic = this.data;
     /*this.medic = new Medic();

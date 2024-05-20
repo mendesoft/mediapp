@@ -5,9 +5,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { MaterialModule } from '../../material/material.module';
-import { Specialty } from '../../model/specialty';
-import { SpecialtyService } from '../../service/specialty.service';
+import { MaterialModule } from 'src/app/material/material.module';
+import { Specialty } from 'src/app/model/specialty';
+import { SpecialtyService } from 'src/app/service/specialty.service';
 
 @Component({
   standalone: true,
@@ -59,9 +59,9 @@ export class SpecialtyComponent implements OnInit {
   }
 
   createTable(specialtys: Specialty[]){
-    this.dataSource = new MatTableDataSource(specialtys);
+    this.dataSource = new MatTableDataSource(specialtys);    
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;        
   }
 
   checkChildren(): boolean{

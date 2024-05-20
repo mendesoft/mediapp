@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment.development';
 import { ConsultListExamDTOI } from '../dto/consultListExamDTOI';
 import { FilterConsultDTO } from '../dto/filterConsultDTO';
 import { Consult } from '../model/consult';
-import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +51,11 @@ export class ConsultService {
   saveFile(data: File){
     const formdata: FormData = new FormData();
     formdata.append('file', data);
-
+    
     return this.http.post(`${this.url}/saveFile`, formdata);
   }
 
+  readFile(id: number){
+    return this.http.get(`${this.url}/readFile/${id}`, { responseType: 'blob'});
+  }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Medic } from '../model/medic';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.development';
+import { environment } from 'src/environments/environment.development';
 import { GenericService } from './generic.service';
 import { Subject } from 'rxjs';
 
@@ -33,5 +33,5 @@ export class MedicService extends GenericService<Medic> {
   getMessageChange(){
     return this.messageChange.asObservable();
   }
-
+  
 }
